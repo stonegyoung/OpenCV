@@ -16,10 +16,15 @@ while cap.isOpened():
     if not ret:
         break    
     
+    # 값이 계산되는 동안에 얼굴을 틀어서 이미지 좌표가 바뀌지 않게 lock
+    frame.flags.writeable = False
+    
     frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
     # 얼굴 인식 결과
     result = face_detection.process(frame_rgb) # rgb로 넣어줘야 한다
     # print(result.detections)
+    
+    frame.flags.writeable = True
     
     # 얼굴 인식이 됐다면
     if result.detections:
